@@ -11,6 +11,8 @@ public class BuildCrossword : MonoBehaviour
     public int CellCol { get; private set; }
     public int CellRow { get; private set; }
     private int m_cellNum;
+    private int m_setNum;
+
     private void Start()
     {
         CellCol = 10;
@@ -19,6 +21,8 @@ public class BuildCrossword : MonoBehaviour
         m_cell = new GameObject[m_cellNum];
 
         BuildFlame(CellCol, CellRow);
+        SetWord("どきんちゃん");
+        SetWord("ばいきんまん");
     }
 
     public void BuildFlame(int col, int row)
@@ -35,6 +39,23 @@ public class BuildCrossword : MonoBehaviour
         gridLayout.constraintCount = col;
     }
 
+    private void SetWord(string word)
+    {
+        var _inputCellPrefab = (GameObject)Resources.Load("Prefabs/WordInputCell");
+
+        for (int i = 0; i < word.Length; i++)
+        {
+            _inputCellPrefab = Instantiate(_inputCellPrefab);
+            _inputCellPrefab.transform.SetParent(m_cell[i + m_setNum].transform, false);
+            //debug
+            var _cellInputField = _inputCellPrefab.GetComponent<InputField>();
+            _cellInputField.text = word[i].ToString();
+            //
+
+        }
+
+        m_setNum += word.Length;
+    }
 
 
     /// <summary>
