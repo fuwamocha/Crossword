@@ -12,6 +12,7 @@ public class BuildCrossword : MonoBehaviour
     public int CellRow { get; private set; }
     private int m_cellNum;
     private int m_setNum;
+    private char[] _endChar = { 'ン', 'ー' };
 
     private void Start()
     {
@@ -21,8 +22,8 @@ public class BuildCrossword : MonoBehaviour
         m_cell = new GameObject[m_cellNum];
 
         BuildFlame(CellCol, CellRow);
-        SetWord("どきんちゃん");
-        SetWord("ばいきんまん");
+        SetWord("ドキンチヤン");
+        SetWord("バイキンマン");
     }
 
     public void BuildFlame(int col, int row)
@@ -51,12 +52,18 @@ public class BuildCrossword : MonoBehaviour
             var _cellInputField = _inputCellPrefab.GetComponent<InputField>();
             _cellInputField.text = word[i].ToString();
             //
-
+            for (int j = 0; j < _endChar.Length; j++)
+            {
+                if (word[i] == _endChar[j]) SetBlackBox(i + m_setNum);
+            }
         }
-
+        m_cell[word.Length].GetComponent<Image>().color = Color.black;
         m_setNum += word.Length;
     }
-
+    private void SetBlackBox(int endCellIndex)
+    {
+        m_cell[endCellIndex + CellCol].GetComponent<Image>().color = Color.black;
+    }
 
     /// <summary>
     /// 正しい文字が入力された時に変更できないようにする
