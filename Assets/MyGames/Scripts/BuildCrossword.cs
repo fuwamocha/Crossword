@@ -34,4 +34,16 @@ public class BuildCrossword : MonoBehaviour
         var gridLayout = m_canvas.GetComponent<GridLayoutGroup>();
         gridLayout.constraintCount = col;
     }
+
+
+
+    /// <summary>
+    /// 正しい文字が入力された時に変更できないようにする
+    /// </summary>
+    /// <param name="_cellPrefab"></param>
+    private void LockChar(GameObject _cellPrefab)
+    {
+        var _cellInputField = _cellPrefab.GetComponent<InputField>();
+        _cellInputField.readOnly = true;
+    }
 }
